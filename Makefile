@@ -1,7 +1,7 @@
 INV=\033[7m
 NC=\033[0m
 
-.PHONY: all clean lint lint-fix build test
+.PHONY: all clean style fix-style build test
 
 all: clean style build test
 	@which composer > /dev/null
