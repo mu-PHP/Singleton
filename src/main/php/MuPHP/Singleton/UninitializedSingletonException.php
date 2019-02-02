@@ -10,7 +10,12 @@ namespace MuPHP\Singleton;
 
 use Throwable;
 
-class SingletonException extends \Exception
+/**
+ * Class SingletonException
+ *
+ * @package MuPHP\Singleton
+ */
+class UninitializedSingletonException extends \Exception
 {
     public function __construct($message = "", Throwable $previous = null)
     {

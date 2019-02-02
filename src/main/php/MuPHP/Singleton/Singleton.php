@@ -8,6 +8,14 @@
 
 namespace MuPHP\Singleton;
 
+/**
+ * Singleton Trait
+ *
+ * This trait passes through all static method calls to a single instance of
+ * the class.
+ *
+ * @package MuPHP\Singleton
+ */
 trait Singleton
 {
     /**
@@ -17,7 +25,7 @@ trait Singleton
 
     /**
      * @return self
-     * @throws SingletonException
+     * @throws UninitializedSingletonException
      */
     public static function getInstance(): self
     {
@@ -29,11 +37,14 @@ trait Singleton
             static::$singletons[get_called_class()] = $singleton;
             return $singleton;
         } catch (\Exception $e) {
-            throw new SingletonException('Singleton for `' . get_called_class() . '` not initialized!', $e);
+            throw new UninitializedSingletonException('Singleton for `'
+                . get_called_class() . '` not initialized!', $e);
         }
     }
 
     /**
+     * Sets the instance of the Singleton
+     *
      * @param self $instance
      */
     protected static function setInstance(self $instance): void
@@ -42,10 +53,12 @@ trait Singleton
     }
 
     /**
+     * Magic method for translating static methods to instance methods
+     *
      * @param $name
      * @param $arguments
      * @return mixed
-     * @throws SingletonException
+     * @throws UninitializedSingletonException
      */
     public static function __callStatic($name, $arguments)
     {
@@ -54,11 +67,14 @@ trait Singleton
     }
 
     /**
+     * Called when
+     *
      * @return Singleton
-     * @throws SingletonException
+     * @throws UninitializedSingletonException
      */
     protected static function autoConstruct(): self
     {
-        throw new SingletonException('This singleton does not support auto-construction!');
+        throw new UninitializedSingletonException('This singleton does'
+            . ' not support auto-construction!');
     }
 }

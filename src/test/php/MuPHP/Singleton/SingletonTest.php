@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class SingletonTest extends TestCase
 {
     /**
-     * @expectedException MuPHP\Singleton\SingletonException
+     * @expectedException MuPHP\Singleton\UninitializedSingletonException
      */
     public function testUninitializedSingleton()
     {
@@ -26,7 +26,10 @@ class SingletonTest extends TestCase
     public function testInitializedSingleton()
     {
         TestSingleton::setup();
-        $this->assertInstanceOf('MuPHP\Singleton\Fixture\TestSingleton', TestSingleton::getInstance());
+        $this->assertInstanceOf(
+            'MuPHP\Singleton\Fixture\TestSingleton',
+            TestSingleton::getInstance()
+        );
     }
 
     public function testStaticPassthrough()
